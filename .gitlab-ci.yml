@@ -1,0 +1,90 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_REGISTRY: registry.gitlab.com
+  DOCKER_IMAGE_BACKEND: ${DOCKER_REGISTRY}/${CI_PROJECT_PATH}/backend
+  DOCKER_IMAGE_FRONTEND: ${DOCKER_REGISTRY}/${CI_PROJECT_PATH}/frontend
+  MONGODB_TEST_URI: mongodb://mongo:27017/test
+
+cache:
+  paths:
+    - frontend/node_modules/
+    - backend/node_modules/
+
+# Test stage
+test_backend:
+  stage: test
+  image: node:16-bullseye-slim
+  services:
+    - mongo:5.0
+  before_script:
+    - cd backend
+    - npm install
+  script:
+    - npm run test
+  only:
+    - main
+    - develop
+    - merge_requests
+
+test_frontend:
+  stage: test
+  image: node:16-alpine
+  before_script:
+    - cd frontend
+    - npm install
+  script:
+    - npm run test
+  only:
+    - main
+    - develop
+    - merge_requests
+
+# Build stage
+build_backend:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $DOCKER_REGISTRY
+  script:
+    - docker build -t $DOCKER_IMAGE_BACKEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_BACKEND:latest -f Dockerfile.backend .
+    - docker push $DOCKER_IMAGE_BACKEND:$CI_COMMIT_SHORT_SHA
+    - docker push $DOCKER_IMAGE_BACKEND:latest
+  only:
+    - main
+
+build_frontend:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $DOCKER_REGISTRY
+  script:
+    - docker build -t $DOCKER_IMAGE_FRONTEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_FRONTEND:latest -f Dockerfile.frontend .
+    - docker push $DOCKER_IMAGE_FRONTEND:$CI_COMMIT_SHORT_SHA
+    - docker push $DOCKER_IMAGE_FRONTEND:latest
+  only:
+    - main
+
+# Deploy stage with Portainer
+deploy:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - |
+      curl -X POST ${PORTAINER_WEBHOOK_URL} \
+        -H "Content-Type: application/json" \
+        -d '{
+          "tag": "'$CI_COMMIT_SHORT_SHA'"
+        }'
+  only:
+    - main
+  environment:
+    name: production
+  when: manual
