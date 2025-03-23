@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-# Instalar dependencias para Chromium y herramientas para diagnóstico
+# Instalar dependencias para Chromium y herramientas útiles
 RUN apt-get update && apt-get install -y \
   chromium \
   gconf-service \
@@ -40,9 +40,7 @@ RUN apt-get update && apt-get install -y \
   lsb-release \
   xdg-utils \
   wget \
-  curl \
-  iputils-ping \
-  dnsutils \
+  netcat \
   && rm -rf /var/lib/apt/lists/*
 
 # Set environment variable to skip Puppeteer download
@@ -51,10 +49,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Crear directorio de trabajo
 WORKDIR /app
-
-# Script para esperar a que MongoDB esté disponible
-COPY wait-for-mongodb.sh .
-RUN chmod +x wait-for-mongodb.sh
 
 # Copiar archivos de dependencias e instalar
 COPY package*.json ./
@@ -69,5 +63,5 @@ RUN mkdir -p /app/sessions
 # Puerto que expondrá la aplicación
 EXPOSE 3000
 
-# Comando para iniciar la aplicación
-CMD ["./wait-for-mongodb.sh", "node", "src/app.js"]
+# Ejecutar directamente la aplicación sin script de espera
+CMD ["node", "src/app.js"]

@@ -6,7 +6,6 @@ services:
     container_name: whatsapp-api-mongodb
     restart: always
     environment:
-      # Credenciales directas para MongoDB
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password123
       MONGO_INITDB_DATABASE: whatsapp_api
@@ -17,6 +16,12 @@ services:
       - ./mongo-init:/docker-entrypoint-initdb.d
     networks:
       - whatsapp-network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
 
   backend:
     build:
@@ -25,13 +30,14 @@ services:
     container_name: whatsapp-api-backend
     restart: always
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     ports:
       - "3100:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - JWT_SECRET=ebf8d398c7a6e25ab8c1a72390bd76e8f1a392059d2ec3b3
+      - JWT_SECRET=your_strong_jwt_secret_key_here
       - SESSION_PATH=/app/sessions
       - MONGODB_URI=mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin
     volumes:

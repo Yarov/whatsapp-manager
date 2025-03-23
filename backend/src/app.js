@@ -23,24 +23,30 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Agregar esto al inicio del archivo app.js
+// Agregar este código en tu app.js antes de la conexión a MongoDB
 console.log('Iniciando aplicación...');
 console.log(`MongoDB URI: ${process.env.MONGODB_URI ? 'Definido (no mostrando contraseña)' : 'INDEFINIDO'}`);
 
-// Modificar la conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin', {
-  serverSelectionTimeoutMS: 30000, // Incrementar el tiempo de espera
-  heartbeatFrequencyMS: 2000, // Frecuencia de latido más alta
-})
-  .then(() => console.log('Conectado a MongoDB correctamente'))
-  .catch(err => {
-    console.error('Error de conexión a MongoDB:', err);
-    // Intentar con valores por defecto si falla
-    console.log('Intentando conexión alternativa...');
-    return mongoose.connect('mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin');
-  })
-  .catch(err => console.error('Error en segundo intento de conexión:', err));
+// Función para conectar a MongoDB con reintentos
+const connectWithRetry = () => {
+  const mongoUri = process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin';
+  console.log('Intentando conectar a MongoDB...');
 
+  mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: 5000,
+  })
+    .then(() => {
+      console.log('Conectado a MongoDB correctamente');
+    })
+    .catch(err => {
+      console.error('Error de conexión a MongoDB:', err);
+      console.log('Reintentando en 5 segundos...');
+      setTimeout(connectWithRetry, 5000);
+    });
+};
+
+// Iniciar la conexión con reintentos
+connectWithRetry();
 // Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/clients', clientRoutes);
