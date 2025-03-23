@@ -23,21 +23,15 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Agregar este código en tu app.js antes de la conexión a MongoDB
+// Agregar al inicio de app.js (después de los imports)
 console.log('Iniciando aplicación...');
-console.log(`MongoDB URI: ${process.env.MONGODB_URI ? 'Definido (no mostrando contraseña)' : 'INDEFINIDO'}`);
 
-// Función para conectar a MongoDB con reintentos
+// Modificar la parte de conexión a MongoDB
+// Conexión a MongoDB con reintentos automáticos
 const connectWithRetry = () => {
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin';
   console.log('Intentando conectar a MongoDB...');
-
-  mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: 5000,
-  })
-    .then(() => {
-      console.log('Conectado a MongoDB correctamente');
-    })
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Conectado a MongoDB'))
     .catch(err => {
       console.error('Error de conexión a MongoDB:', err);
       console.log('Reintentando en 5 segundos...');
@@ -45,7 +39,7 @@ const connectWithRetry = () => {
     });
 };
 
-// Iniciar la conexión con reintentos
+// Reemplazar la conexión actual con esta
 connectWithRetry();
 // Rutas
 app.use('/api/auth', authRoutes);

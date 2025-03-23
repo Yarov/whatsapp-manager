@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-# Instalar dependencias para Chromium y herramientas útiles
+# Install Chromium dependencies
 RUN apt-get update && apt-get install -y \
   chromium \
   gconf-service \
@@ -40,28 +40,27 @@ RUN apt-get update && apt-get install -y \
   lsb-release \
   xdg-utils \
   wget \
-  netcat \
   && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR /app
 
 # Set environment variable to skip Puppeteer download
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Crear directorio de trabajo
-WORKDIR /app
-
-# Copiar archivos de dependencias e instalar
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copiar el resto del código fuente
+# Copy source code
 COPY . .
 
-# Crear directorio para sesiones
+# Create sessions directory for WhatsApp sessions
 RUN mkdir -p /app/sessions
 
-# Puerto que expondrá la aplicación
+# Expose port
 EXPOSE 3000
 
-# Ejecutar directamente la aplicación sin script de espera
+# Start command - directamente ejecutando Node.js sin el script wait-for-mongodb.sh
 CMD ["node", "src/app.js"]
