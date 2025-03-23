@@ -39,6 +39,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb
     console.log('Intentando conexión alternativa...');
     return mongoose.connect('mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin');
   })
+  .catch(err => console.error('Error en segundo intento de conexión:', err));
 
 // Rutas
 app.use('/api/auth', authRoutes);
