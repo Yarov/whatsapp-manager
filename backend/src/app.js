@@ -11,6 +11,7 @@ const clientRoutes = require('./routes/client.routes');
 const whatsappRoutes = require('./routes/whatsapp.routes');
 const externalApiRoutes = require('./routes/external-api.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 
 // Configuración de la aplicación
@@ -33,6 +34,7 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/external', externalApiRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
