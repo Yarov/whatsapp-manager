@@ -23,10 +23,22 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error de conexión a MongoDB:', err));
+// Agregar esto al inicio del archivo app.js
+console.log('Iniciando aplicación...');
+console.log(`MongoDB URI: ${process.env.MONGODB_URI ? 'Definido (no mostrando contraseña)' : 'INDEFINIDO'}`);
+
+// Modificar la conexión a MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin', {
+  serverSelectionTimeoutMS: 30000, // Incrementar el tiempo de espera
+  heartbeatFrequencyMS: 2000, // Frecuencia de latido más alta
+})
+  .then(() => console.log('Conectado a MongoDB correctamente'))
+  .catch(err => {
+    console.error('Error de conexión a MongoDB:', err);
+    // Intentar con valores por defecto si falla
+    console.log('Intentando conexión alternativa...');
+    return mongoose.connect('mongodb://admin:password123@mongodb:27017/whatsapp_api?authSource=admin');
+  })
 
 // Rutas
 app.use('/api/auth', authRoutes);

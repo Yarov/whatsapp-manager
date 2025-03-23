@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-# Install Chromium dependencies
+# Instalar dependencias para Chromium y herramientas para diagnóstico
 RUN apt-get update && apt-get install -y \
   chromium \
   gconf-service \
@@ -36,32 +36,38 @@ RUN apt-get update && apt-get install -y \
   libxtst6 \
   ca-certificates \
   fonts-liberation \
-  libappindicator1 \
   libnss3 \
   lsb-release \
   xdg-utils \
   wget \
+  curl \
+  iputils-ping \
+  dnsutils \
   && rm -rf /var/lib/apt/lists/*
-
-# Create app directory
-WORKDIR /app
 
 # Set environment variable to skip Puppeteer download
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Copy package files and install dependencies
+# Crear directorio de trabajo
+WORKDIR /app
+
+# Script para esperar a que MongoDB esté disponible
+COPY wait-for-mongodb.sh .
+RUN chmod +x wait-for-mongodb.sh
+
+# Copiar archivos de dependencias e instalar
 COPY package*.json ./
 RUN npm install
 
-# Copy source code
+# Copiar el resto del código fuente
 COPY . .
 
-# Create sessions directory for WhatsApp sessions
+# Crear directorio para sesiones
 RUN mkdir -p /app/sessions
 
-# Expose port
+# Puerto que expondrá la aplicación
 EXPOSE 3000
 
-# Start command
-CMD ["npm", "start"]
+# Comando para iniciar la aplicación
+CMD ["./wait-for-mongodb.sh", "node", "src/app.js"]
