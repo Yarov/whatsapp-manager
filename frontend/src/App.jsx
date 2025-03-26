@@ -1,4 +1,3 @@
-// Actualización para App.jsx - Agregar importación y ruta para LandingPage
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./context/AuthContext";
@@ -8,7 +7,7 @@ import DashboardLayout from "./components/layouts/DashboardLayout";
 import AdminLayout from "./components/layouts/AdminLayout";
 
 // Pages
-import LandingPage from "./pages/LandingPage"; // Nueva importación
+import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
@@ -16,6 +15,7 @@ import ClientList from "./pages/clients/ClientList";
 import ClientDetail from "./pages/clients/ClientDetail";
 import AddClient from "./pages/clients/AddClient";
 import NotFound from "./pages/NotFound";
+import ApiExplorer from "./pages/api/ApiExplorer"; // Nueva importación
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -151,6 +151,24 @@ function App() {
               </DashboardLayout>
             </ProtectedRoute>
           }
+        />
+
+        {/* Ruta actualizada para API Explorer */}
+        <Route
+          path="/dashboard/api-explorer"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ApiExplorer />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Redirección para la ruta antigua si alguien intenta acceder directamente */}
+        <Route
+          path="/api-explorer"
+          element={<Navigate to="/dashboard/api-explorer" replace />}
         />
 
         {/* Rutas de administrador */}

@@ -66,6 +66,7 @@ exports.getClients = async (req, res) => {
         phoneNumber: client.phoneNumber,
         status: client.status,
         isConnected: client.isConnected,
+        apiToken: client.apiToken,
         createdAt: client.createdAt
       }))
     });
