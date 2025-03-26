@@ -71,8 +71,16 @@ export const clientApi = {
   deleteClient: (id) => {
     return apiClient.delete(`/clients/${id}`);
   },
+  secureDeleteClient: (id, confirmationWord) => {
+    return apiClient.delete(`/clients/${id}/secure`, {
+      data: { confirmationWord }
+    });
+  },
   regenerateToken: (id) => {
     return apiClient.post(`/clients/${id}/regenerate-token`);
+  },
+  getMessageStats: (id) => {
+    return apiClient.get(`/clients/${id}/message-stats`);
   }
 };
 

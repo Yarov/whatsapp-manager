@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
 const Client = require('../models/client.model');
 const whatsappService = require('../services/whatsapp/whatsapp.service');
+const Message = require('../models/message.model');
 
 exports.createClient = async (req, res) => {
   try {
@@ -65,6 +66,7 @@ exports.getClients = async (req, res) => {
         phoneNumber: client.phoneNumber,
         status: client.status,
         isConnected: client.isConnected,
+        apiToken: client.apiToken,
         createdAt: client.createdAt
       }))
     });
@@ -236,6 +238,61 @@ exports.deleteClient = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar cliente:', error);
     res.status(500).json({ message: 'Error al eliminar cliente' });
+  }
+};
+/**
+ * Eliminar un cliente de manera segura con palabra de confirmación
+ */
+exports.secureDeleteClient = async (req, res) => {
+  try {
+    const { confirmationWord } = req.body;
+
+    // Verificar que se proporcionó la palabra de confirmación
+    if (!confirmationWord || confirmationWord !== 'ELIMINAR') {
+      return res.status(400).json({
+        success: false,
+        message: 'Palabra de confirmación incorrecta. Debe ingresar "ELIMINAR"'
+      });
+    }
+
+    const client = await Client.findOne({
+      _id: req.params.id,
+      owner: req.userId
+    });
+
+    if (!client) {
+      return res.status(404).json({
+        success: false,
+        message: 'Cliente no encontrado'
+      });
+    }
+
+    // Desconectar cliente de WhatsApp si está conectado
+    if (client.isConnected) {
+      try {
+        await whatsappService.disconnectClient(client._id.toString());
+      } catch (disconnectError) {
+        console.error(`Error al desconectar cliente ${client._id}:`, disconnectError);
+        // Continuamos con la eliminación aunque falle la desconexión
+      }
+    }
+
+    // Eliminar todos los mensajes asociados al cliente
+    await Message.deleteMany({ clientId: client._id });
+
+    // Eliminar cliente
+    await Client.deleteOne({ _id: client._id });
+
+    res.json({
+      success: true,
+      message: 'Cliente eliminado correctamente'
+    });
+  } catch (error) {
+    console.error('Error al eliminar cliente:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error al eliminar cliente'
+    });
   }
 };
 
