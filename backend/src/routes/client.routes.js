@@ -49,4 +49,11 @@ router.delete('/:id', clientController.deleteClient);
 // Ruta para regenerar token de API
 router.post('/:id/regenerate-token', clientController.regenerateToken);
 
+// Ruta para obtener estadísticas de mensajes
+const messageStatsController = require('../controllers/messageStats.controller');
+router.get('/:id/message-stats', messageStatsController.getClientMessageStats);
+
+// Ruta para eliminar cliente de forma segura
+router.delete('/:id/secure', clientController.secureDeleteClient);
+
 module.exports = router;

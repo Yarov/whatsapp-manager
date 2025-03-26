@@ -1,5 +1,5 @@
-// frontend/src/components/layouts/AdminLayout.jsx
-import { useState } from "react";
+// En AdminLayout.jsx
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -27,6 +27,12 @@ export default function AdminLayout({ children }) {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Agregar un efecto que se ejecute cuando cambie la ruta
+  useEffect(() => {
+    // Cerrar el sidebar cuando cambia la ruta
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -35,6 +41,13 @@ export default function AdminLayout({ children }) {
   // Primera letra del nombre de usuario para el avatar
   const userInitial = user?.name?.charAt(0).toUpperCase() || "A";
 
+  // Función para cerrar el menú al hacer clic fuera de él
+  const handleOutsideClick = () => {
+    if (sidebarOpen) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Mobile sidebar overlay */}
@@ -42,6 +55,7 @@ export default function AdminLayout({ children }) {
         className={`fixed inset-0 bg-gray-600 bg-opacity-75 z-40 transition-opacity lg:hidden ${
           sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
+        onClick={handleOutsideClick}
       />
 
       {/* Sidebar */}
@@ -50,6 +64,14 @@ export default function AdminLayout({ children }) {
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
+        <div className="flex justify-end p-2 lg:hidden">
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="p-2 text-white rounded-md hover:bg-indigo-800"
+          >
+            <XMarkIcon className="w-6 h-6" />
+          </button>
+        </div>
         <div className="flex flex-col h-full">
           {/* Enlaces de navegación */}
           <div className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
@@ -65,6 +87,7 @@ export default function AdminLayout({ children }) {
                     : "text-white hover:bg-indigo-800",
                   "flex items-center px-4 py-2 rounded-md"
                 )}
+                onClick={() => setSidebarOpen(false)}
               >
                 <item.icon className="w-6 h-6 mr-3" />
                 <span>{item.name}</span>
@@ -84,7 +107,10 @@ export default function AdminLayout({ children }) {
                 <p className="text-sm font-medium text-white">{user?.name}</p>
                 <p className="text-xs text-indigo-200">Administrador</p>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => {
+                    handleLogout();
+                    setSidebarOpen(false);
+                  }}
                   className="text-xs text-indigo-200 hover:text-white"
                 >
                   Cerrar sesión
