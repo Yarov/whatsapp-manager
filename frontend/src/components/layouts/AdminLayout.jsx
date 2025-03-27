@@ -60,14 +60,14 @@ export default function AdminLayout({ children }) {
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 transition duration-300 transform bg-indigo-900 lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 transition duration-300 transform bg-blue-800 lg:relative lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         <div className="flex justify-end p-2 lg:hidden">
           <button
             onClick={() => setSidebarOpen(false)}
-            className="p-2 text-white rounded-md hover:bg-indigo-800"
+            className="p-2 text-white rounded-md hover:bg-blue-900"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -83,8 +83,8 @@ export default function AdminLayout({ children }) {
                   location.pathname === item.href ||
                     (item.href !== "/dashboard" &&
                       location.pathname.startsWith(item.href))
-                    ? "bg-indigo-800 text-white"
-                    : "text-white hover:bg-indigo-800",
+                    ? "bg-blue-700 text-white"
+                    : "text-white hover:bg-blue-700",
                   "flex items-center px-4 py-2 rounded-md"
                 )}
                 onClick={() => setSidebarOpen(false)}
@@ -96,10 +96,10 @@ export default function AdminLayout({ children }) {
           </div>
 
           {/* Perfil de usuario */}
-          <div className="p-4 border-t border-indigo-800">
+          <div className="p-4 border-t border-blue-800">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center text-white font-medium">
+                <div className="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center text-white font-medium">
                   {userInitial}
                 </div>
               </div>
@@ -146,7 +146,7 @@ export default function AdminLayout({ children }) {
             </button>
             <Link
               to="/dashboard"
-              className="text-sm text-indigo-600 hover:text-indigo-800"
+              className="text-sm text-blue-700 hover:text-blue-800"
             >
               Vista normal
             </Link>

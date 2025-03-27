@@ -184,7 +184,7 @@ export default function ClientsList() {
                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                     <div className="flex items-center">
                       <div className="h-8 w-8 flex-shrink-0 rounded-full bg-green-100 flex items-center justify-center">
-                        <DevicePhoneMobileIcon className="h-5 w-5 text-green-600" />
+                        <DevicePhoneMobileIcon className="h-5 w-5 text-blue-700" />
                       </div>
                       <div className="ml-4">
                         <div className="font-medium text-gray-900">
@@ -200,7 +200,7 @@ export default function ClientsList() {
                     {client.ownerDetails ? (
                       <Link
                         to={`/admin/users/${client.owner}`}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-blue-700 hover:text-blue-700"
                       >
                         {client.ownerDetails.name}
                       </Link>
@@ -234,7 +234,7 @@ export default function ClientsList() {
                     <div className="flex justify-end space-x-3">
                       <Link
                         to={`/admin/clients/${client._id || client.id}`}
-                        className="text-green-600 hover:text-green-900"
+                        className="text-blue-700 hover:text-blue-900"
                         title="Ver detalles"
                       >
                         Ver

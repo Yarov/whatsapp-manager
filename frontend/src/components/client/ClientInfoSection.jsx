@@ -86,7 +86,7 @@ export default function ClientInfoSection({
               <button
                 type="button"
                 onClick={onCopyToken}
-                className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-blue-700 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
                 <ClipboardDocumentIcon className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -121,7 +121,7 @@ export default function ClientInfoSection({
                   <button
                     type="submit"
                     disabled={actionLoading === "webhook"}
-                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
+                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
                   >
                     {actionLoading === "webhook" ? "Guardando..." : "Guardar"}
                   </button>
@@ -181,7 +181,7 @@ export default function ClientInfoSection({
                     type="button"
                     onClick={onInitialize}
                     disabled={actionLoading === "initialize"}
-                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
+                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
                   >
                     {actionLoading === "initialize"
                       ? "Inicializando..."

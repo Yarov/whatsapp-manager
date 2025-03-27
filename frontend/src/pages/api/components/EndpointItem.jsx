@@ -78,7 +78,7 @@ export default function EndpointItem({
           <span
             className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium ${
               endpoint.method === "GET"
-                ? "bg-blue-100 text-blue-800"
+                ? "bg-blue-100 text-blue-700"
                 : "bg-green-100 text-green-800"
             }`}
           >
@@ -138,7 +138,7 @@ export default function EndpointItem({
                           onChange={(e) =>
                             handleParamChange(param.name, e.target.value)
                           }
-                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
                         >
                           {param.enum.map((option) => (
                             <option key={option} value={option}>
@@ -157,7 +157,7 @@ export default function EndpointItem({
                               e.target.value === "true"
                             )
                           }
-                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
                         >
                           <option value="">Seleccionar...</option>
                           <option value="true">Verdadero</option>
@@ -176,7 +176,7 @@ export default function EndpointItem({
                             param.example ||
                             (param.required ? "Requerido" : "Opcional")
                           }
-                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
                         />
                       )}
                     </div>
@@ -213,7 +213,7 @@ export default function EndpointItem({
                 type="button"
                 onClick={executeTest}
                 disabled={executing || !selectedClient}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 <PlayIcon className="h-4 w-4 mr-2" />
                 {executing ? "Ejecutando..." : "Ejecutar"}
@@ -222,7 +222,7 @@ export default function EndpointItem({
                 type="button"
                 onClick={copyCurlCommand}
                 disabled={!selectedClient}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 transition-colors disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 <ClipboardDocumentIcon className="h-4 w-4 mr-2" />
                 Copiar curl
@@ -238,7 +238,7 @@ export default function EndpointItem({
               <h4 className="text-sm font-medium text-gray-700 mb-2">
                 Respuesta: {testResult.status}{" "}
                 {testResult.status >= 200 && testResult.status < 300 && (
-                  <span className="text-green-600">Éxito</span>
+                  <span className="text-blue-700">Éxito</span>
                 )}
                 {testResult.status >= 400 && testResult.status < 500 && (
                   <span className="text-yellow-600">Error de cliente</span>

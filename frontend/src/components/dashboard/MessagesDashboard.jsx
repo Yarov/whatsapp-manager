@@ -73,7 +73,7 @@ export default function MessagesDashboard({ clientId }) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
       </div>
     );
   }
@@ -221,7 +221,7 @@ export default function MessagesDashboard({ clientId }) {
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="px-4 py-5 sm:p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                  <div className="flex-shrink-0 bg-blue-700 rounded-md p-3">
                     <ChartBarIcon
                       className="h-6 w-6 text-white"
                       aria-hidden="true"
@@ -247,7 +247,7 @@ export default function MessagesDashboard({ clientId }) {
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="px-4 py-5 sm:p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                  <div className="flex-shrink-0 bg-blue-700 rounded-md p-3">
                     <ArrowDownTrayIcon
                       className="h-6 w-6 text-white"
                       aria-hidden="true"
@@ -312,7 +312,7 @@ export default function MessagesDashboard({ clientId }) {
                 onClick={() => setSelectedTimeRange(range.key)}
                 className={`px-3 py-1 rounded-md text-sm font-medium ${
                   selectedTimeRange === range.key
-                    ? "bg-indigo-100 text-indigo-700"
+                    ? "bg-indigo-100 text-blue-700"
                     : "text-gray-500 hover:text-gray-700"
                 }`}
               >
