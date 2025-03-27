@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }) {
 
       {/* Sidebar para móvil */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 transition duration-300 transform bg-indigo-900 lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 transition duration-300 transform bg-blue-800 lg:relative lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -67,11 +67,11 @@ export default function DashboardLayout({ children }) {
           {/* Botón de cierre para móvil */}
           <div className="flex items-center justify-between p-4 lg:hidden">
             <div className="flex items-center">
-              <div className="h-8 w-8 rounded-full bg-indigo-700 flex items-center justify-center text-white font-bold">
+              <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-white font-bold">
                 W
               </div>
               <span className="ml-2 text-white font-semibold">
-                WhatsApp API
+                WtX
               </span>
             </div>
             <button
@@ -87,7 +87,7 @@ export default function DashboardLayout({ children }) {
             {isAdmin && isAdmin() && (
               <Link
                 to="/admin/dashboard"
-                className="flex items-center px-4 py-2 text-white hover:bg-indigo-800 rounded-md"
+                className="flex items-center px-4 py-2 text-white hover:bg-blue-700 rounded-md"
               >
                 <UserGroupIcon className="w-6 h-6 mr-3" />
                 <span>Administración</span>
@@ -102,8 +102,8 @@ export default function DashboardLayout({ children }) {
                   location.pathname === item.href ||
                     (item.href !== "/dashboard" &&
                       location.pathname.startsWith(item.href))
-                    ? "bg-indigo-800 text-white"
-                    : "text-white hover:bg-indigo-800",
+                    ? "bg-blue-700 text-white"
+                    : "text-white hover:bg-blue-700",
                   "flex items-center px-4 py-2 rounded-md"
                 )}
               >
@@ -114,10 +114,10 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {/* Perfil de usuario */}
-          <div className="p-4 border-t border-indigo-800">
+          <div className="p-4 border-t border-blue-800">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-indigo-700 flex items-center justify-center text-white font-medium">
+                <div className="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center text-white font-medium">
                   {userInitial}
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }) {
             {/* Botón de menú móvil */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 mr-2 text-gray-500 rounded-md lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="p-2 mr-2 text-gray-500 rounded-md lg:hidden hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700"
             >
               <span className="sr-only">Abrir menú</span>
               <Bars3Icon className="w-6 h-6" />
@@ -161,7 +161,7 @@ export default function DashboardLayout({ children }) {
                 ? "API Explorer"
                 : location.pathname.startsWith("/admin")
                 ? "Dashboard Administrador"
-                : "WhatsApp API"}
+                : "WtX"}
             </h1>
           </div>
 
@@ -178,7 +178,7 @@ export default function DashboardLayout({ children }) {
               !location.pathname.startsWith("/admin") && (
                 <Link
                   to="/admin/dashboard"
-                  className="hidden sm:inline-block text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                  className="hidden sm:inline-block text-sm text-blue-700 hover:text-blue-800 font-medium"
                 >
                   Vista administrador
                 </Link>

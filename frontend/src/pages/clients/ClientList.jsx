@@ -42,7 +42,7 @@ export default function ClientList() {
         <div className="mt-4 sm:mt-0">
           <Link
             to="/clients/add"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
           >
             <UserPlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Agregar cliente
@@ -120,7 +120,7 @@ export default function ClientList() {
                   <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <Link
                       to={`/clients/${client.id}`}
-                      className="text-green-600 hover:text-green-900"
+                      className="text-blue-700 hover:text-blue-900"
                     >
                       Ver<span className="sr-only">, {client.businessName}</span>
                     </Link>
@@ -131,7 +131,7 @@ export default function ClientList() {
               <tr>
                 <td colSpan={5} className="py-8 text-center text-sm text-gray-500">
                   No hay clientes registrados.{' '}
-                  <Link to="/clients/add" className="text-green-600 hover:text-green-900">
+                  <Link to="/clients/add" className="text-blue-700 hover:text-blue-900">
                     Agregar un cliente
                   </Link>
                 </td>

@@ -121,7 +121,7 @@ export default function UserDetail() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-700"></div>
       </div>
     );
   }
@@ -136,7 +136,7 @@ export default function UserDetail() {
         <div className="mt-4">
           <Link
             to="/admin/users"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-700"
           >
             Volver a usuarios
           </Link>
@@ -162,7 +162,7 @@ export default function UserDetail() {
         <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
-              <UserIcon className="h-6 w-6 text-indigo-600" />
+              <UserIcon className="h-6 w-6 text-blue-700" />
             </div>
             <div className="ml-4">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -178,7 +178,7 @@ export default function UserDetail() {
               className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${
                 user.role === "admin"
                   ? "bg-purple-100 text-purple-800"
-                  : "bg-blue-100 text-blue-800"
+                  : "bg-blue-100 text-blue-700"
               }`}
             >
               {user.role === "admin" ? "Administrador" : "Usuario"}
@@ -222,7 +222,7 @@ export default function UserDetail() {
                   <button
                     onClick={handleChangeRole}
                     disabled={actionInProgress}
-                    className="ml-3 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="ml-3 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700"
                   >
                     <ShieldCheckIcon
                       className="-ml-0.5 mr-1 h-4 w-4"
@@ -247,7 +247,7 @@ export default function UserDetail() {
                     className={`ml-3 inline-flex items-center px-2.5 py-1.5 border shadow-sm text-xs font-medium rounded focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       user.active
                         ? "border-red-300 text-red-700 bg-white hover:bg-red-50 focus:ring-red-500"
-                        : "border-green-300 text-green-700 bg-white hover:bg-green-50 focus:ring-green-500"
+                        : "border-green-300 text-blue-800 bg-white hover:bg-green-50 focus:ring-green-500"
                     }`}
                   >
                     {user.active ? (
@@ -381,7 +381,7 @@ export default function UserDetail() {
                       <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <Link
                           to={`/admin/clients/${client.id}`}
-                          className="text-green-600 hover:text-green-900"
+                          className="text-blue-700 hover:text-blue-900"
                         >
                           Ver
                           <span className="sr-only">

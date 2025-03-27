@@ -1,4 +1,4 @@
-# WhatsApp API Platform
+# WtX Platform
 
 Una plataforma completa para manejar múltiples clientes de WhatsApp con panel administrativo y APIs para integración con herramientas como n8n.
 

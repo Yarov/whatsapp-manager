@@ -63,7 +63,7 @@ export default function AdminDashboard() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <UserGroupIcon
-                  className="h-6 w-6 text-indigo-600"
+                  className="h-6 w-6 text-blue-700"
                   aria-hidden="true"
                 />
               </div>
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
             <div className="text-sm">
               <Link
                 to="/admin/users"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-blue-700 hover:text-blue-700"
               >
                 Ver todos los usuarios
               </Link>
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <DevicePhoneMobileIcon
-                  className="h-6 w-6 text-green-600"
+                  className="h-6 w-6 text-blue-700"
                   aria-hidden="true"
                 />
               </div>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
             <div className="text-sm">
               <Link
                 to="/admin/clients"
-                className="font-medium text-green-600 hover:text-green-500"
+                className="font-medium text-blue-700 hover:text-blue-900"
               >
                 Ver todos los clientes
               </Link>
@@ -195,7 +195,7 @@ export default function AdminDashboard() {
           </h2>
           <Link
             to="/admin/users"
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+            className="text-sm font-medium text-blue-700 hover:text-blue-700"
           >
             Ver todos
           </Link>
@@ -269,7 +269,7 @@ export default function AdminDashboard() {
                         className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                           user.role === "admin"
                             ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
+                            : "bg-blue-100 text-blue-700"
                         }`}
                       >
                         {user.role === "admin" ? "Administrador" : "Usuario"}
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link
                         to={`/admin/users/${user._id}`}
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-blue-700 hover:text-blue-700"
                       >
                         Ver<span className="sr-only">, {user.name}</span>
                       </Link>
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
           </h2>
           <Link
             to="/admin/clients"
-            className="text-sm font-medium text-green-600 hover:text-green-500"
+            className="text-sm font-medium text-blue-700 hover:text-blue-900"
           >
             Ver todos
           </Link>
@@ -411,7 +411,7 @@ export default function AdminDashboard() {
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link
                         to={`/admin/clients/${client._id}`}
-                        className="text-green-600 hover:text-green-900"
+                        className="text-blue-700 hover:text-blue-900"
                       >
                         Ver
                         <span className="sr-only">, {client.businessName}</span>
