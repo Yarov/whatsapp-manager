@@ -1,6 +1,6 @@
-FROM node:20-slim
+FROM --platform=linux/amd64 node:20
 
-# Install Chromium dependencies
+# Install Chromium dependencies for Puppeteer
 RUN apt-get update && apt-get install -y \
   chromium \
   gconf-service \
@@ -51,7 +51,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --no-audit --no-fund
 
 # Copy source code
 COPY . .
@@ -62,5 +62,5 @@ RUN mkdir -p /app/sessions
 # Expose port
 EXPOSE 3000
 
-# Start command - directamente ejecutando Node.js sin el script wait-for-mongodb.sh
+# Start command
 CMD ["node", "src/app.js"]

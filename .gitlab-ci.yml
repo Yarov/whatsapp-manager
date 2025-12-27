@@ -1,7 +1,6 @@
 stages:
   - test
   - build
-  - deploy
 
 variables:
   DOCKER_REGISTRY: registry.gitlab.com
@@ -17,7 +16,7 @@ cache:
 # Test stage
 test_backend:
   stage: test
-  image: node:16-bullseye-slim
+  image: node:20
   services:
     - mongo:5.0
   before_script:
@@ -32,7 +31,7 @@ test_backend:
 
 test_frontend:
   stage: test
-  image: node:16-alpine
+  image: node:20-alpine
   before_script:
     - cd frontend
     - npm install
@@ -52,7 +51,8 @@ build_backend:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $DOCKER_REGISTRY
   script:
-    - docker build -t $DOCKER_IMAGE_BACKEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_BACKEND:latest -f Dockerfile.backend .
+    - cd backend
+    - docker build --platform linux/amd64 -t $DOCKER_IMAGE_BACKEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_BACKEND:latest .
     - docker push $DOCKER_IMAGE_BACKEND:$CI_COMMIT_SHORT_SHA
     - docker push $DOCKER_IMAGE_BACKEND:latest
   only:
@@ -66,25 +66,11 @@ build_frontend:
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $DOCKER_REGISTRY
   script:
-    - docker build -t $DOCKER_IMAGE_FRONTEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_FRONTEND:latest -f Dockerfile.frontend .
+    - cd frontend
+    - docker build --platform linux/amd64 -t $DOCKER_IMAGE_FRONTEND:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE_FRONTEND:latest .
     - docker push $DOCKER_IMAGE_FRONTEND:$CI_COMMIT_SHORT_SHA
     - docker push $DOCKER_IMAGE_FRONTEND:latest
   only:
     - main
 
-# Deploy stage with Portainer
-deploy:
-  stage: deploy
-  image: curlimages/curl:latest
-  script:
-    - |
-      curl -X POST ${PORTAINER_WEBHOOK_URL} \
-        -H "Content-Type: application/json" \
-        -d '{
-          "tag": "'$CI_COMMIT_SHORT_SHA'"
-        }'
-  only:
-    - main
-  environment:
-    name: production
-  when: manual
+# Removed deploy stage since we're using Coolify
