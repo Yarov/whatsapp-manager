@@ -1,11 +1,16 @@
 # Build stage
-FROM node:20-slim as build
+FROM node:20 as build
 
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+
+# Set environment variable for build
+ENV VITE_API_URL=/api
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+
+RUN npm run build --verbose
 
 # Production stage
 FROM nginx:alpine
