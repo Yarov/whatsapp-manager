@@ -1,3 +1,4 @@
+// frontend/src/components/layouts/DashboardLayout.jsx
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -5,7 +6,6 @@ import {
   HomeIcon,
   DevicePhoneMobileIcon,
   UserGroupIcon,
-  BellIcon,
   Bars3Icon,
   XMarkIcon,
   CodeBracketIcon,
@@ -19,7 +19,7 @@ const navigation = [
     name: "API Explorer",
     href: "/dashboard/api-explorer",
     icon: CodeBracketIcon,
-  }, // Ruta actualizada
+  },
 ];
 
 function classNames(...classes) {
@@ -70,9 +70,7 @@ export default function DashboardLayout({ children }) {
               <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-white font-bold">
                 W
               </div>
-              <span className="ml-2 text-white font-semibold">
-                WtX
-              </span>
+              <span className="ml-2 font-bold text-xl text-white">WtX</span>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -167,12 +165,6 @@ export default function DashboardLayout({ children }) {
 
           {/* Enlaces y notificaciones */}
           <div className="flex items-center space-x-4">
-            <button
-              className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
-              title="Notificaciones"
-            >
-              <BellIcon className="w-6 h-6" />
-            </button>
             {isAdmin &&
               isAdmin() &&
               !location.pathname.startsWith("/admin") && (

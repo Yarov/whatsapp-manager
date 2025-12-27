@@ -3,15 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import {
-  ArrowLeftIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ArrowPathIcon,
-  ClipboardDocumentIcon,
-  LinkIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 import MessagesDashboard from "../../components/dashboard/MessagesDashboard";
 import DeleteClientModal from "../../components/modals/DeleteClientModal";
 import QRCodeSection from "../../components/client/QRCodeSection";
@@ -247,24 +240,13 @@ export default function ClientDetail() {
     }
   };
 
-  // Manejar cambios en el formulario de webhook
-  const handleWebhookFormChange = (e) => {
-    const { name, value } = e.target;
-    setWebhookForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   // Guardar la configuración del webhook
-  const handleSaveWebhook = async (e) => {
-    e.preventDefault();
-
+  const handleSaveWebhook = async (data) => {
     setActionLoading("webhook");
     try {
       // Utilizar el endpoint específico para webhooks
       await axios.patch(`/api/clients/${id}/webhook`, {
-        webhookUrl: webhookForm.webhookUrl,
+        webhookUrl: data.webhookUrl,
       });
 
       toast.success("URL de Webhook actualizada correctamente");
@@ -321,7 +303,6 @@ export default function ClientDetail() {
             onDelete={handleOpenDeleteModal}
             onCopyToken={handleCopyToken}
             onRegenerateToken={handleRegenerateToken}
-            onWebhookChange={handleWebhookFormChange}
             onSaveWebhook={handleSaveWebhook}
             webhookForm={webhookForm}
             showWebhookForm={showWebhookForm}

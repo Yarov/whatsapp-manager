@@ -1,18 +1,21 @@
-// frontend/src/components/client/ClientInfoSection.jsx
+// frontend/src/components/client/ClientInfoSection.jsx (actualizado)
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   XCircleIcon,
   ArrowPathIcon,
   ClipboardDocumentIcon,
   LinkIcon,
   TrashIcon,
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
+import WebhookForm from "../forms/WebhookForm";
 
 export default function ClientInfoSection({
   client,
   onDelete,
   onCopyToken,
   onRegenerateToken,
-  onWebhookChange,
   onSaveWebhook,
   webhookForm,
   showWebhookForm,
@@ -22,6 +25,10 @@ export default function ClientInfoSection({
   onDisconnect,
   onRestart,
 }) {
+  const handleSaveWebhook = (data) => {
+    onSaveWebhook(data);
+  };
+
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
@@ -104,35 +111,14 @@ export default function ClientInfoSection({
             <dt className="text-sm font-medium text-gray-500">
               URL de Webhook
             </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 relative">
               {showWebhookForm ? (
-                <form
-                  onSubmit={onSaveWebhook}
-                  className="flex items-center space-x-2"
-                >
-                  <input
-                    type="url"
-                    name="webhookUrl"
-                    value={webhookForm.webhookUrl}
-                    onChange={onWebhookChange}
-                    placeholder="https://tu-webhook.com/endpoint"
-                    className="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  />
-                  <button
-                    type="submit"
-                    disabled={actionLoading === "webhook"}
-                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
-                  >
-                    {actionLoading === "webhook" ? "Guardando..." : "Guardar"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowWebhookForm(false)}
-                    className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    Cancelar
-                  </button>
-                </form>
+                <WebhookForm
+                  initialValue={webhookForm.webhookUrl}
+                  onSave={handleSaveWebhook}
+                  onCancel={() => setShowWebhookForm(false)}
+                  loading={actionLoading === "webhook"}
+                />
               ) : (
                 <div className="flex items-center">
                   <span className="mr-2">
@@ -171,11 +157,9 @@ export default function ClientInfoSection({
             </dd>
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">
-              Acciones de WhatsApp
-            </dt>
+            <dt className="text-sm font-medium text-gray-500">Acciones</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              <div className="flex space-x-3">
+              <div className="flex flex-wrap gap-3">
                 {!client.isConnected && (
                   <button
                     type="button"
